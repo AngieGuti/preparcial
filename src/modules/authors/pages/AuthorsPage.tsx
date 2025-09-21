@@ -4,7 +4,7 @@
 //importar usestate y useeffect
 import { useState } from "react";
 import { useAuthors } from "@/modules/authors/hooks/useAuthors";
-import List from '@/modules/authors/ui/List';
+import List from '@/modules/authors/ui/AuthorList';
 import { Author } from '@/modules/authors/types/types';
 import Modal from "@/modules/authors/ui/Modal";
 
