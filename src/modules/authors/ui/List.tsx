@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Author } from '@/types/types';
+import { Author } from '@/modules/authors/types/types';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
 // Es necesario definir las props que el componente va a recibir

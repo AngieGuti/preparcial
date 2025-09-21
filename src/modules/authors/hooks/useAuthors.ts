@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Author } from "@/types/types";
-import { fetchAuthors } from "@/services/authorService";
+import { Author } from "@/modules/authors/types/types";
+import { fetchAuthors } from "@/modules/authors/services/authorService";
 
 // Hook personalizado para obtener autores
 export function useAuthors() {

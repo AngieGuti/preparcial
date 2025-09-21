@@ -1,4 +1,4 @@
-import {Author} from "@/types/types";
+import {Author} from "@/modules/authors/types/types";
 
 //Función para obtener los autores desde la API
 export const fetchAuthors = async(): Promise<Author[]> => {
