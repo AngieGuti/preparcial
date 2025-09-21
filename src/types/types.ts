@@ -2,11 +2,12 @@
 
 export interface Author { //recordar exportar porque si no se exporta, no se puede usar en otro lado y va a dar error
     id: number;
-    birthDate: Date; // Tipo nativo de JavaScript para fechas
+    birthDate: string; // Usar string para simplificar la serialización/deserialización
     name: string;
     description: string;
     image: string;
     books: Book[];
+    prizes: Prize[];
 }
 
 export interface Book {
@@ -14,7 +15,7 @@ export interface Book {
     name: string;
     isbn: string;
     image: string;
-    publishingDate: Date; // Tipo nativo de JavaScript para fechas
+    publishingDate: string; // Debería ser Date pero se usa string para simplificar
     description: string;
     editorial: Editorial;
 }
@@ -22,4 +23,18 @@ export interface Book {
 export interface Editorial {
     id: number;
     name: string;
+}
+
+export interface Prize {
+    id: number;
+    premiationDate: string;
+    name: string;
+    description: string;
+    organization: Organization;
+}
+
+export interface Organization {
+    id: number;
+    name: string;
+    tipo: string;
 }
