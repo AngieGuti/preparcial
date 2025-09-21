@@ -5,6 +5,7 @@
 import { useState, useEffect } from "react";
 import List from '@/components/List';
 import { Author } from '@/types/types';
+import { fetchAuthors } from "@/services/authorService";
 
 // El export default es necesario para que nextjs pueda identificar 
 // cuál es el componente que debe renderizarse como página dentro del enrutado automático.
@@ -15,24 +16,15 @@ export default function AuthorsPage(){
     const [loading, setLoading]= useState<boolean>(true); // Estado para manejar la carga
 
     useEffect(()=> {
-        async function fetchAuthors() {
-            // Función para obtener los autores desde la API
-            try {
-                const res = await fetch("http://127.0.0.1:8080/api/authors");
-                if(!res.ok){ // si entra aquí es que hubo un error al momento de la petición
-                    throw new Error("Error al obtener los autores");
-                }
-                const data: Author[]= await res.json();
-                setAuthors(data);
-                // Actualizar el estado con los autores obtenidos
-            } catch (error) {
-                console.error("Error al intentar obtener los autores", error);
-            } finally {
-                setLoading(false); // Finalizar el estado de carga
-            }
-        }
-        fetchAuthors();
-    }, []); // El arreglo vacío asegura que el efecto se ejecute solo una vez al montar el componente
+        // Llamamos a la función fetchAuthors para obtener los autores
+        const loadAuthors = async() => {
+            const data = fetchAuthors();
+            setAuthors(await data);
+            setLoading(false);
+        };
+        loadAuthors();
+        
+    }, []); // El arreglo vacío significa que esto se ejecuta una sola vez al montar el componente
     
     if(loading){
         return <p className="p-a"> Cargando los autores...</p>
