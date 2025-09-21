@@ -41,7 +41,7 @@ export default function RootLayout({
         <Footer 
           creatorName =  "Angie Gutiérrez"
           code = {202223607}
-          link = "https://github.com/AngieGuti"
+          link = "https://github.com/AngieGuti/preparcial.git"
         />
       </body>
     </html>
