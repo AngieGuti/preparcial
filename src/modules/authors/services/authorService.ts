@@ -37,3 +37,39 @@ export const createAuthor = async (data: AuthorFormData): Promise<Author | null>
         return null;
     }
 };
+
+
+// Función para obtener un autor por su ID -> GET
+export const getAuthorById = async (id: string): Promise<Author> => {
+  const res = await fetch(`http://127.0.0.1:8080/api/authors/${id}`);
+  if (!res.ok) throw new Error("Error al obtener el autor");
+  return res.json();
+};
+
+// Función para actualizar un autor existente -> PUT
+export const updateAuthor = async (id: string, author: AuthorFormData): Promise<void> => {
+  const res = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(author),
+  });
+  if (!res.ok) throw new Error("Error al actualizar el autor");
+};
+
+// POR FIN: Función para eliminar un autor por su ID -> DELETE
+export const deleteAuthor = async (id: number): Promise<void> => {
+    try {
+        const res = await fetch(`http://127.0.0.1:8080/api/authors/${id}`, {
+            method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Error al eliminar el autor");
+    } catch (error) {
+        console.error("Error en deleteAuthor:", error);
+    }
+};
+
+// Notas:
+
+// 1. Cada función maneja un aspecto diferente de la interacción con la API RESTful.
+// 2. Se utilizan try/catch para manejar errores y asegurar que el programa no falle inesperadamente.
+// 3. Las funciones retornan datos en formatos útiles para su uso en componentes React.

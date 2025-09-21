@@ -8,10 +8,14 @@ interface ListProps {
     title: string;
     authors: Author[];
     // Función para manejar el clic en un autor
-    onAuthorClick?: (author: Author) => void;
+    onAuthorClick?: (author: Author) => void; 
+    // Función para manejar la edición de un autor
+    onEdit?: (author: Author) => void;
+    // Función para manejar la eliminación de un autor
+    onDelete?: (authorId: number) => void;
 }
 
-const List = ({title, authors, onAuthorClick}: ListProps) => {
+const List = ({title, authors, onAuthorClick, onEdit, onDelete}: ListProps) => {
 
     return (
         <div className="container mx-auto p-4">
@@ -34,13 +38,13 @@ const List = ({title, authors, onAuthorClick}: ListProps) => {
                             </button>
                             <button
                               className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-800 flex items-center gap-2 cursor-pointer"
-                              //onClick={() => onEdit?.(author)}
+                              onClick={() => onEdit?.(author)}
                             >
                               <FaEdit /> Editar
                             </button>
                             <button
                               className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-700 flex items-center gap-2 cursor-pointer"
-                              //onClick={() => onDelete?.(author.id)}
+                              onClick={() => onDelete?.(author.id)} // Llamar a la función pasada por props que maneja la eliminación
                             >
                               <FaTrash /> Eliminar
                             </button>

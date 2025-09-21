@@ -1,27 +1,46 @@
 // Decirle a nextjs que este es un componente reactivo
 "use client";
 
+// importar router
+import { useRouter } from "next/navigation";
 //importar usestate y useeffect
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthors } from "@/modules/authors/hooks/useAuthors";
 import List from '@/modules/authors/ui/AuthorList';
 import { Author } from '@/modules/authors/types/types';
 import Modal from "@/modules/authors/ui/Modal";
+// ELIMINAR AUTOR AAA
+import { deleteAuthor } from "@/modules/authors/services/authorService";
+import { useNotificationStore } from "@/shared/store/useNotificationStore";
 
-// El export default es necesario para que nextjs pueda identificar 
-// cuál es el componente que debe renderizarse como página dentro del enrutado automático.
-// El sufijo Page es una convención de Next.js para el nombramiento de páginas.
 
 export default function AuthorsPage(){
     // Usar el hook personalizado para obtener autores
     const { authors, loading, error } = useAuthors();
     
+    // AUTORES LOCALES
+    const [localAuthors, setLocalAuthors] = useState<Author[]>([]);
+
     // Usar el Modal para mostrar detalles del autor
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Estado para almacenar el autor seleccionado
     const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
 
+    // ELIMINAR AUTOR AAA
+    const showNotification = useNotificationStore((s) => s.showNotification);
+
+    // Obtener el router para navegación programática
+    const router = useRouter();
+
+
+    // sincronizar localAuthors con lo que venga del hook
+    useEffect(() => {
+      if (authors.length > 0) {
+        setLocalAuthors(authors);
+      }
+    }, [authors]);
+    
     // Función para abrir el modal y establecer el autor seleccionado
     const handleAuthorClick = (author: Author) => {
         setSelectedAuthor(author);
@@ -34,6 +53,23 @@ export default function AuthorsPage(){
         setSelectedAuthor(null);
     };
 
+    // Manejador para eliminar un autor aaa
+    const handleDeleteAuthor = async (authorId: number) => {
+        // Preguntar al usuario si está seguro de eliminar
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este autor?");
+        if (!confirmDelete) return; // Si el usuario cancela, salir de la función
+
+        // Llamar al servicio para eliminar el autor
+        try {
+            await deleteAuthor(authorId);
+            setLocalAuthors((prevAuthors) => prevAuthors.filter((author) => author.id !== authorId));
+            showNotification("Autor eliminado correctamente ✅", "success");
+        } catch {
+            showNotification("Error al eliminar el autor ❌", "error");
+        }
+    };
+
+    // Manejar estados de carga y error
     if(loading){
         return <div className="text-center p-4">Cargando autores</div>;
     }
@@ -43,7 +79,13 @@ export default function AuthorsPage(){
 
     return(
         <>
-            <List title="Autores" authors={authors} onAuthorClick={handleAuthorClick} />
+            <List 
+            title="Autores" 
+            authors={localAuthors} 
+            onAuthorClick={handleAuthorClick}
+            onEdit= {(author) => router.push(`/authors/edit/${author.id}`)}
+            onDelete= {handleDeleteAuthor}
+            />
             {/* Modal para mostrar detalles del autor */}
             <Modal
                 isOpen={isModalOpen}
