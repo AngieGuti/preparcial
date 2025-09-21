@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Author } from '@/types/types';
-
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
 // Es necesario definir las props que el componente va a recibir
 interface ListProps {
@@ -20,14 +20,33 @@ const List = ({title, authors, onAuthorClick}: ListProps) => {
                 {authors.map((author) => (
                     <li key={author.id} 
                         className="bg-purple-600 shadow rounded-lg p-4 flex items-center space-x-4"
-                        onClick={() => onAuthorClick?.(author)} // Click opcional
                     >
                         <div>
                         <h2 className="text-lg font-semibold">{author.name}</h2>
                         <p className="text-lg text-sm">Nacimiento: {author.birthDate}</p>
                         </div>
+                        <div className="flex gap-7 ml-auto">
+                            <button
+                              className="bg-purple-400 text-white px-3 py-1 rounded hover:bg-purple-700 flex items-center gap-2"
+                              onClick={() => onAuthorClick?.(author)} // Llamar a la función pasada por props que maneja el clic y muestra el modal
+                            >
+                               <FaEye /> Ver Detalles
+                            </button>
+                            <button
+                              className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-800 flex items-center gap-2"
+                              //onClick={() => onEdit?.(author)}
+                            >
+                              <FaEdit /> Editar
+                            </button>
+                            <button
+                              className="bg-red-400 text-white px-3 py-1 rounded hover:bg-red-700 flex items-center gap-2"
+                              //onClick={() => onDelete?.(author.id)}
+                            >
+                              <FaTrash /> Eliminar
+                            </button>
+                        </div>
                     </li>
-                ))}
+               ))}
             </ul>
         </div>
     );
