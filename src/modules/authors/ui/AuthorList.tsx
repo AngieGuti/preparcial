@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+//import Image from 'next/image';
 import { Author } from '@/modules/authors/types/types';
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 

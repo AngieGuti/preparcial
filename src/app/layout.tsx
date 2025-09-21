@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/shared/ui/Header";
 import Footer from "@/shared/ui/Footer";
+import Notification from "@/shared/ui/Notification";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,8 @@ export default function RootLayout({
           title="Mi Biblioteca"
           imageUrl="/logo.jpg"
         />
+
+        <Notification /> {/* Esto permite mostrar notificaciones en toda la aplicación */}
 
         <main className="flex-grow">{/* Contenido principal de la página */}
           {children}
