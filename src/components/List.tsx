@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Image from 'next/image';
 import { Author } from '@/types/types';
@@ -8,22 +7,24 @@ import { Author } from '@/types/types';
 interface ListProps {
     title: string;
     authors: Author[];
+    // Función para manejar el clic en un autor
+    onAuthorClick?: (author: Author) => void;
 }
 
-const List = ({title, authors}: ListProps) => {
-    
+const List = ({title, authors, onAuthorClick}: ListProps) => {
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">{title}</h1>
             <ul className="space-y-4">
                 {authors.map((author) => (
                     <li key={author.id} 
-                        className="bg-purple-400 shadow rounded-lg p-4 flex items-center space-x-4">
-                        {/* Información del autor */}
+                        className="bg-purple-600 shadow rounded-lg p-4 flex items-center space-x-4"
+                        onClick={() => onAuthorClick?.(author)} // Click opcional
+                    >
                         <div>
-                        <h2 className= "text-lg font-semibold">{author.name}</h2>
-                        <p className="text-black text-sm">Nacimiento: {author.birthDate}</p>
-                        <p className="text-black">{author.description}</p>
+                        <h2 className="text-lg font-semibold">{author.name}</h2>
+                        <p className="text-lg text-sm">Nacimiento: {author.birthDate}</p>
                         </div>
                     </li>
                 ))}
@@ -33,6 +34,14 @@ const List = ({title, authors}: ListProps) => {
 };
 
 export default List;
+
+
+
+
+
+
+
+
 
 // Más tarde le ponemos la imagen porque no la tenemos en la base de datos:
 // {author.image ? (

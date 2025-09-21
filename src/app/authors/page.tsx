@@ -3,34 +3,69 @@
 
 //importar usestate y useeffect
 import { useState, useEffect } from "react";
+import { useAuthors } from "@/hooks/useAuthors";
 import List from '@/components/List';
 import { Author } from '@/types/types';
 import { fetchAuthors } from "@/services/authorService";
+import Modal from "@/components/Modal";
 
 // El export default es necesario para que nextjs pueda identificar 
 // cuál es el componente que debe renderizarse como página dentro del enrutado automático.
 // El sufijo Page es una convención de Next.js para el nombramiento de páginas.
 
 export default function AuthorsPage(){
-    const [authors, setAuthors]= useState<Author[]>([]); // Estado para almacenar los autores
-    const [loading, setLoading]= useState<boolean>(true); // Estado para manejar la carga
-
-    useEffect(()=> {
-        // Llamamos a la función fetchAuthors para obtener los autores
-        const loadAuthors = async() => {
-            const data = fetchAuthors();
-            setAuthors(await data);
-            setLoading(false);
-        };
-        loadAuthors();
-        
-    }, []); // El arreglo vacío significa que esto se ejecuta una sola vez al montar el componente
+    // Usar el hook personalizado para obtener autores
+    const { authors, loading, error } = useAuthors();
     
+    // Usar el Modal para mostrar detalles del autor
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Estado para almacenar el autor seleccionado
+    const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
+
+    // Función para abrir el modal y establecer el autor seleccionado
+    const handleAuthorClick = (author: Author) => {
+        setSelectedAuthor(author);
+        setIsModalOpen(true);
+    };
+
+    // Función para cerrar el modal
+    const handleCloseModal = () => {   
+        setIsModalOpen(false);
+        setSelectedAuthor(null);
+    };
+
     if(loading){
-        return <p className="p-a"> Cargando los autores...</p>
+        return <div className="text-center p-4">Cargando autores</div>;
+    }
+    if(error){
+        return <div className="text-center p-4 text-red-500">Error: {error}</div>;
     }
 
-    return (
-        <List title="Autores" authors={authors} />
-  );
-};
+    return(
+        <>
+            <List title="Autores" authors={authors} onAuthorClick={handleAuthorClick} />
+            {/* Modal para mostrar detalles del autor */}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={selectedAuthor?.name ?? "Detalles del Autor"}
+            >
+                {selectedAuthor && (
+                    <div>
+                        {/* la clase mb-2 se utiliza para agregar un margen inferior */}
+                        <p className="mb-2"><strong>Nacimiento:</strong> {selectedAuthor.birthDate}</p>
+                        <p className="mb-2"><strong>Descripción:</strong> {selectedAuthor.description}</p>
+                        {/* Aquí se puede agregar más detalles del autor, pero por el momento no se incluyen */}
+                    </div>
+                )}
+            </Modal>
+            
+        </>
+    );
+}
+
+// Notas:
+// 1. El componente AuthorsPage ahora usa el hook useAuthors para manejar la lógica de obtención de datos.
+// 2. Se ha añadido un modal para mostrar detalles del autor cuando se hace clic en su nombre.
+// 3. La lista de autores se ha movido a un componente separado List para mejorar la separación de responsabilidades.

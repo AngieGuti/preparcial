@@ -25,10 +25,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} font-sans min-h-screen flex flex-col`}>
-      <Header title="Mi Aplicación" imageUrl="/logo.jpg" />
-      <main className="flex-grow">{children}</main>
-      <Footer creatorName="Angie Gutiérrez" code={202223607} link="https://github.com/AngieGuti" />
-    </div>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+      >
+        <Header 
+          title="Mi Biblioteca"
+          imageUrl="/logo.jpg"
+        />
+
+        <main className="flex-grow">{/* Contenido principal de la página */}
+          {children}
+        </main>
+
+        <Footer 
+          creatorName =  "Angie Gutiérrez"
+          code = {202223607}
+          link = "https://github.com/AngieGuti"
+        />
+      </body>
+    </html>
   );
 }
