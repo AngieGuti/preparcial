@@ -79,8 +79,19 @@ export default function AuthorsPage(){
 
     return(
         <>
+            <div className="container mx-auto p-4">
+                <div className="flex justify-between items-center mb-4">
+                    <h1 className="text-2xl font-bold">Autores</h1>
+                    <button
+                        onClick={() => router.push("/crear")}
+                        className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors"
+                    >
+                        + Crear Autor
+                    </button>
+                </div>
+            </div>
             <List 
-            title="Autores" 
+            title="" 
             authors={localAuthors} 
             onAuthorClick={handleAuthorClick}
             onEdit= {(author) => router.push(`/authors/edit/${author.id}`)}

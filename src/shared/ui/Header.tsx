@@ -25,6 +25,8 @@ const Header = ({ title, imageUrl}: HeaderProps) => {
           <Link href="/" className="px-3 hover:text-gray-300">Inicio</Link>
           <Link href="/authors" className="px-3 hover:text-gray-300">Autores</Link>
           <Link href="/crear" className="px-3 hover:text-gray-300">Crear autores</Link>
+          <Link href="/books" className="px-3 hover:text-gray-300">Libros</Link>
+          <Link href="/books/crear" className="px-3 hover:text-gray-300">Crear libros</Link>
         </nav>
       </div>
         </header>

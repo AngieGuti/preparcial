@@ -25,6 +25,9 @@ export default function Home(){
         <ul className="list-disc list-inside ">
           <li>Para ver la lista de autores, navega a la sección de Autores en el menú.</li>
           <li>Para agregar un nuevo autor, dirígete a la sección Crear Autores.</li>
+          <li>Para ver la lista de libros, navega a la sección de Libros en el menú.</li>
+          <li>Para agregar un nuevo libro, dirígete a la sección Crear Libros.</li>
+
         </ul>
       </div>
     </main>

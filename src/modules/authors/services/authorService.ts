@@ -1,5 +1,6 @@
-import {Author} from "@/modules/authors/types/types";
+import {Author, Book} from "@/modules/authors/types/types";
 import { AuthorFormData } from "../validation/authorSchema";
+import { BookFormData } from "../validation/bookSchema";
 // importamos el formulario para que sea funcional con el backend
 
 //Función para obtener los autores desde la API
@@ -15,6 +16,71 @@ export const fetchAuthors = async(): Promise<Author[]> => {
         return []; // Retornar un arreglo vacío en caso de error
     }
 };
+
+//Función para obtener los libros desde la API
+export const fetchBooks = async(): Promise<Book[]> => {
+    try{
+        const res = await fetch("http://127.0.0.1:8080/api/books"); // se nos dice que en el back se encuentra en esta ruta
+        if(!res.ok){ // si entra aquí es que hubo un error al momento de la petición
+            throw new Error("Error al obtener los libros");
+        }
+        return res.json(); // Retornar la respuesta en formato JSON
+    } catch (error) {
+        console.error("Error en fetchBooks:", error);
+        return []; // Retornar un arreglo vacío en caso de error
+    }
+};
+
+// Función para crear un nuevo libro -> POST
+export const createBook = async (data: BookFormData): Promise<Book | null> => {
+    try {
+        const res = await fetch("http://127.0.0.1:8080/api/books", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!res.ok) {
+            throw new Error("Error al crear el libro");
+        }
+        return res.json();
+    } catch (error) {
+        console.error("Error en createBook:", error);
+        return null;
+    }
+};
+
+// Función para obtener un libro por su ID -> GET
+export const getBookById = async (id: string): Promise<Book> => {
+    const res = await fetch(`http://127.0.0.1:8080/api/books/${id}`);
+    if (!res.ok) throw new Error("Error al obtener el libro");
+    return res.json();
+};
+
+// Función para actualizar un libro existente -> PUT
+export const updateBook = async (id: string, book: BookFormData): Promise<void> => {
+    const res = await fetch(`http://127.0.0.1:8080/api/books/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(book),
+    });
+    if (!res.ok) throw new Error("Error al actualizar el libro");
+};
+
+// Función para eliminar un libro por su ID -> DELETE
+export const deleteBook = async (id: number): Promise<void> => {
+    try {
+        const res = await fetch(`http://127.0.0.1:8080/api/books/${id}`, {
+            method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Error al eliminar el libro");
+    } catch (error) {
+        console.error("Error en deleteBook:", error);
+    }
+};
+
 
 // Función para crear un nuevo autor -> POST
 export const createAuthor = async (data: AuthorFormData): Promise<Author | null> => {

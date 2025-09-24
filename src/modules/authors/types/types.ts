@@ -6,8 +6,8 @@ export interface Author { //recordar exportar porque si no se exporta, no se pue
     name: string;
     description: string;
     image: string;
-    books: Book[];
-    prizes: Prize[];
+    books: Book;
+    prizes: Prize;
 }
 
 export interface Book {
@@ -17,11 +17,10 @@ export interface Book {
     image: string;
     publishingDate: string; // Debería ser Date pero se usa string para simplificar
     description: string;
-    editorial: Editorial;
+    editorial: string; // cambio a string para simplificar
 }
 
 export interface Editorial {
-    id: number;
     name: string;
 }
 
@@ -30,7 +29,7 @@ export interface Prize {
     premiationDate: string;
     name: string;
     description: string;
-    organization: Organization;
+    organization: string; // cambio a string para simplificar
 }
 
 export interface Organization {
