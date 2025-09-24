@@ -15,6 +15,9 @@ interface ListProps {
     onDelete?: (authorId: number) => void;
 }
 
+// Componente List que recibe un título y una lista de autores como props
+// Muestra cada autor con su nombre, fecha de nacimiento y botones para ver detalles, editar y eliminar
+// Los botones llaman a las funciones pasadas por props cuando se hace clic en ellos
 const List = ({title, authors, onAuthorClick, onEdit, onDelete}: ListProps) => {
 
     return (

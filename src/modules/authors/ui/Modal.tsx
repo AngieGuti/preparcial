@@ -8,6 +8,10 @@ interface ModalProps {
     title: string;
 }
 
+// Componente Modal que recibe props para controlar su visibilidad y contenido
+// El modal se centra en la pantalla y tiene un fondo semitransparente
+// El contenido del modal se pasa como children
+// El título del modal se muestra en la parte superior
 const Modal = ({isOpen, onClose, children, title}: ModalProps) => {
     if(!isOpen){
         return null;

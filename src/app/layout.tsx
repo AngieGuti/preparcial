@@ -35,7 +35,7 @@ export default function RootLayout({
           imageUrl="/logo.jpg"
         />
 
-        <Notification /> {/* Esto permite mostrar notificaciones en toda la aplicación */}
+         {<Notification />/* Esto permite mostrar notificaciones en toda la aplicación */}
 
         <main className="flex-grow">{/* Contenido principal de la página */}
           {children}
